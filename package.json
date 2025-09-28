@@ -1,0 +1,45 @@
+{
+  "name": "@renderx-plugins/components",
+  "version": "0.1.0",
+  "description": "JSON component definitions for RenderX-based hosts. A versioned catalog of components that thin hosts can serve and plugins can consume without coupling.",
+  "main": "json-components/index.json",
+  "files": [
+    "json-components/**/*.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "renderx",
+    "components",
+    "json",
+    "ui-components",
+    "plugin",
+    "catalog",
+    "templates"
+  ],
+  "author": "BPM Software Solutions",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BPMSoftwareSolutions/renderx-plugin-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BPMSoftwareSolutions/renderx-plugin-components/issues"
+  },
+  "homepage": "https://github.com/BPMSoftwareSolutions/renderx-plugin-components#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run validate",
+    "validate": "node scripts/validate-components.js",
+    "version": "npm run validate && git add -A",
+    "postversion": "git push && git push --tags"
+  },
+  "renderx": {
+    "components": ["json-components"]
+  }
+}
