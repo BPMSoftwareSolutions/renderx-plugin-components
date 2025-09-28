@@ -70,10 +70,126 @@ npm install @renderx-plugins/components
 
 ## Publishing
 
-```bash
-npm version <patch|minor|major>
-npm publish --access public
-```
+### Prerequisites
+
+1. **NPM Account**: Ensure you have an npm account and are logged in:
+   ```bash
+   npm login
+   ```
+
+2. **NPM Token**: For automated publishing, set up an NPM_TOKEN secret in GitHub repository settings.
+
+3. **Permissions**: Ensure you have publish permissions for the `@renderx-plugins` scope.
+
+### Manual Publishing
+
+1. **Validate the package**:
+   ```bash
+   npm run validate
+   ```
+
+2. **Update version and publish**:
+   ```bash
+   # For patch releases (bug fixes)
+   npm version patch
+
+   # For minor releases (new components, additive changes)
+   npm version minor
+
+   # For major releases (breaking changes)
+   npm version major
+   ```
+
+3. **Publish to npm**:
+   ```bash
+   npm publish --access public
+   ```
+
+### Automated Publishing (Recommended)
+
+The repository includes GitHub Actions for automated publishing:
+
+1. **Create a version tag**:
+   ```bash
+   npm version patch  # or minor/major
+   git push origin main --tags
+   ```
+
+2. **GitHub Actions will automatically**:
+   - Validate the package structure
+   - Publish to npm with public access
+   - Create a GitHub release
+
+### Pre-publish Validation
+
+The package includes automatic validation that runs before publishing:
+
+- ✅ Validates all JSON files are properly formatted
+- ✅ Ensures `index.json` lists all component files
+- ✅ Checks for stale entries in the index
+- ✅ Validates component structure (id, metadata, template fields)
+
+### Publishing Checklist
+
+Before publishing a new version:
+
+- [ ] All component JSON files are valid
+- [ ] `index.json` is updated with new components
+- [ ] Version follows semantic versioning
+- [ ] README is updated if needed
+- [ ] All tests pass (if applicable)
+
+## Contributing
+
+### Adding New Components
+
+1. **Create the component JSON file** in `json-components/`:
+   ```json
+   {
+     "id": "my-component",
+     "metadata": {
+       "name": "My Component",
+       "description": "Description of the component"
+     },
+     "template": {
+       "type": "html",
+       "markup": "<div>Component markup</div>"
+     }
+   }
+   ```
+
+2. **Update `json-components/index.json`** to include the new component:
+   ```json
+   {
+     "components": [
+       "existing-component.json",
+       "my-component.json"
+     ]
+   }
+   ```
+
+3. **Validate your changes**:
+   ```bash
+   npm run validate
+   ```
+
+4. **Test locally** by installing the package in a test project.
+
+### Component Guidelines
+
+- **IDs must be unique** and follow kebab-case naming
+- **Keep changes additive** when possible (avoid breaking changes)
+- **Include meaningful metadata** (name, description, category if applicable)
+- **Test your components** in a real RenderX host before publishing
+
+### Development Workflow
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/new-component`
+3. Make your changes and validate: `npm run validate`
+4. Commit your changes: `git commit -m "feat: add new component"`
+5. Push to your fork: `git push origin feature/new-component`
+6. Create a Pull Request
 
 ## Why a separate package?
 
@@ -83,4 +199,4 @@ npm publish --access public
 
 ## License
 
-MIT
+Apache-2.0
